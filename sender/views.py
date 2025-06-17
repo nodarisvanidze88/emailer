@@ -25,15 +25,14 @@ def email_sender(request):
     email_body = data.get('body')
     if not email_receipient or not email_subject or not email_body:
         return Response({'error': 'Missing required fields'}, status=400)
-    try:
-        send_mail(
-            email_subject,
-            email_body,
-            settings.DEFAULT_FROM_EMAIL,
-            [email_receipient],
-            fail_silently=False,
-        )
-    except Exception as e:
-        return Response({'error': str(e)}, status=500)
+
+    send_mail(
+        email_subject,
+        email_body,
+        settings.DEFAULT_FROM_EMAIL,
+        [email_receipient],
+        fail_silently=False,
+    )
+
 
     return Response({'message': 'Email sent successfully!', 'data': data})
